@@ -18,18 +18,21 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             public float rot_z;
             public float rot_w;
             public string name;
+            public int childNumber;
             public NodeCNT[] next = null;
-            public NodeCNT(string _name, float _rot_x, float _rot_y, float _rot_z, float _rot_w, NodeCNT[] _next = null)
+            public NodeCNT(string _name, float _rot_x, float _rot_y, float _rot_z, float _rot_w, int _childNumber, NodeCNT[] _next = null)
             {
                 rot_x = _rot_x;
                 rot_y = _rot_y;
                 rot_z = _rot_z;
                 rot_w = _rot_w;
                 name = _name;
+                childNumber = _childNumber;
                 next = _next;
             }
         }
         private GameObject currentGO;
+        private GameObject selectedRootNode;
         private string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
         private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{currentGO.name}.json";
         public bool IsValid => currentGO;
@@ -51,6 +54,7 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             GUILayout.BeginHorizontal();
 
             currentGO = _selectedObjects.First();
+            selectedRootNode = _selectedObjects.First();
             if (GUILayout.Button("Save Rig Controls"))
             {
                 SaveControlRigs();
@@ -90,21 +94,17 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             }
 
             // get all ctn_hips go
-            Transform _rootCtr = currentGO.transform.Find("CNT_Character");
+            Transform _rootCtr = selectedRootNode.transform;
 
             if (!_rootCtr)
             {
                 return;
             }
 
-            if (_rootCtr.childCount != 1)
-                return;
-
-            _rootCtr = _rootCtr.GetChild(0);
-
-            Transform _child = _rootCtr.GetChild(0);
-            NodeCNT _test = new NodeCNT(_child.name, 0, 0, 0, 0);
-            ControllerToNodeObject(_child, ref _test);
+            
+            Debug.Log(_rootCtr.childCount);
+            NodeCNT _test = new NodeCNT(_rootCtr.name, 0, 0, 0, 0, _rootCtr.childCount);
+            ControllerToNodeObject(_rootCtr, ref _test);
 
             //RecursiveTest(_test);
             Debug.Log("aaaa");
@@ -122,24 +122,22 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
         private void LoadControlRigs(string _file)
         {
             // get all ctn_hips go
-            Transform _rootCtr = currentGO.transform.Find("CNT_Character");
+            // Transform _rootCtr = currentGO.transform.Find("CNT_Character");
+            Transform _rootCtr = selectedRootNode.transform;
 
             if (!_rootCtr)
-            {
                 return;
-            }
 
-            if (_rootCtr.childCount != 1)
-                return;
-            _rootCtr = _rootCtr.GetChild(0);
-            Transform _child = _rootCtr.GetChild(0);
-            
             StreamReader _reader = new StreamReader(_file);
-            NodeCNT _test = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
+            NodeCNT _nodeFromJSon = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
             _reader.Close();
+            
+            if (_rootCtr.childCount != _nodeFromJSon.childNumber)
+                return;
+            
             for (int i = 0; i < 12; i++)
             {
-                ApplyToSelectedGameObject(_child, _test);
+                ApplyToSelectedGameObject(ref _rootCtr, _nodeFromJSon);
             }
         }
 
@@ -150,14 +148,14 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
                 // tail
                 if (_rootNode == null)
                 {
-                    _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w);
+                    _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w, _rootTransform.childCount);
                 }
                 return;
             }
 
             if (_rootNode == null)
             {
-                _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w);
+                _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w, _rootTransform.childCount);
             }
 
             if (_rootTransform.childCount > 0)
@@ -211,7 +209,7 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
         }
 
 
-        private void ApplyToSelectedGameObject(Transform _rootTransform, NodeCNT _rootNode)
+        private void ApplyToSelectedGameObject(ref Transform _rootTransform, NodeCNT _rootNode)
         {
             if (_rootNode.next == null)
             {
@@ -226,8 +224,9 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
 
             for (int _i = 0; _i < _rootNode.next.Length; _i++)
             {
-                var rootTransform = _rootTransform.GetChild(_i);
-                ApplyToSelectedGameObject(rootTransform, _rootNode.next[_i]);
+                var rootTransform = _rootTransform.transform.GetChild(_i);
+                
+                ApplyToSelectedGameObject(ref rootTransform, _rootNode.next[_i]);
             }
 
             // not last
