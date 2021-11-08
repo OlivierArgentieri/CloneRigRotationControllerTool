@@ -4,13 +4,13 @@ using System.Linq;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using EditoolsUnity;
 using static System.String;
 
 namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
 {
     public class CRT_CloneRigPositionToolWindow : EditorWindow
     {
-        #region f/p
         class NodeCNT
         {
             public float rot_x;
@@ -31,11 +31,13 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
                 next = _next;
             }
         }
-        private GameObject currentGO;
-        private GameObject selectedRootNode;
+        #region f/p
+
+        private List<GameObject> selectedGameObjects => Selection.gameObjects.ToList();
+        private GameObject selectedRootNode => selectedGameObjects.Count > 0 ? selectedGameObjects.First() : null;
         private string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
-        private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{currentGO.name}.json";
-        public bool IsValid => currentGO;
+        private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
+        public bool IsValid => selectedRootNode;
 
         #endregion
 
@@ -50,17 +52,11 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
 
             if (_selectedObjects.Count != 1)
                 return;
-            GUILayout.BeginVertical();
-            GUILayout.BeginHorizontal();
-
-            currentGO = _selectedObjects.First();
-            selectedRootNode = _selectedObjects.First();
-            if (GUILayout.Button("Save Rig Controls"))
-            {
-                SaveControlRigs();
-            }
-
-            GUILayout.EndHorizontal();
+            EditoolsLayout.Vertical(true); 
+            EditoolsLayout.Horizontal(true);
+            
+            EditoolsButton.Button("Save Rig Controls", Color.white, SaveControlRigs );
+            EditoolsLayout.Horizontal(false);
 
             GUILayout.Space(2);
 
@@ -68,16 +64,11 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
                 .Where(_f => Path.GetExtension(_f) == ".json").ToArray();
             foreach (var _file in _files)
             {
-                GUILayout.BeginHorizontal();
-                if (GUILayout.Button(Format("Load: {0}", Path.GetFileNameWithoutExtension(_file))))
-                {
-                    LoadControlRigs(_file);
-                }
-
-                GUILayout.EndHorizontal();
+                EditoolsLayout.Horizontal(true);
+                EditoolsButton.Button($"Load: {Path.GetFileNameWithoutExtension(_file)}", Color.white, () => LoadControlRigs(_file));
+                EditoolsLayout.Horizontal(false);
             }
-
-            GUILayout.EndVertical();
+            EditoolsLayout.Vertical(false);
         }
         #endregion
 
@@ -97,21 +88,14 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             Transform _rootCtr = selectedRootNode.transform;
 
             if (!_rootCtr)
-            {
                 return;
-            }
 
-            
-            Debug.Log(_rootCtr.childCount);
             NodeCNT _test = new NodeCNT(_rootCtr.name, 0, 0, 0, 0, _rootCtr.childCount);
             ControllerToNodeObject(_rootCtr, ref _test);
 
             //RecursiveTest(_test);
-            Debug.Log("aaaa");
             string _json = Newtonsoft.Json.JsonConvert.SerializeObject(_test);
             File.WriteAllText(JSON_FILE_NAME, _json);
-
-           // file is automatically closed after reaching the end of the using block
 
 
 #if UNITY_EDITOR
@@ -131,9 +115,12 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             StreamReader _reader = new StreamReader(_file);
             NodeCNT _nodeFromJSon = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
             _reader.Close();
-            
+
             if (_rootCtr.childCount != _nodeFromJSon.childNumber)
+            {
+                EditorUtility.DisplayDialog("Error", "Incompatible .json and gameObject", "OK");
                 return;
+            }
             
             for (int i = 0; i < 12; i++)
             {

@@ -61,6 +61,7 @@
     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Editor\CRT_CloneRigPositionToolWindowInit.cs" />
     <None Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.xml" />
     <None Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json Editor\Newtonsoft.Json.xml" />
+    <None Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Plugins\Editor\Editools\EditoolsUnity.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Projet/PullGithub/CloneRigPositionTool_Holdfast/CloneRigPositionTool_Holdfast/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -327,6 +328,9 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>D:/Projet/PullGithub/CloneRigPositionTool_Holdfast/CloneRigPositionTool_Holdfast/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="EditoolsUnity">
+      <HintPath>D:/Projet/PullGithub/CloneRigPositionTool_Holdfast/CloneRigPositionTool_Holdfast/Assets/CloneRigPositionTool/Assets/CloneRigPositionTool/Plugins/Editor/Editools/EditoolsUnity.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.4f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
