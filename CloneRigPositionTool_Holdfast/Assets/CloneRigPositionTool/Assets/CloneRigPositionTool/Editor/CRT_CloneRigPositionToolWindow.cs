@@ -37,6 +37,8 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
         private GameObject selectedRootNode => selectedGameObjects.Count > 0 ? selectedGameObjects.First() : null;
         private string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
         private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
+        
+        private Vector2 scrollPos;
         public bool IsValid => selectedRootNode;
 
         #endregion
@@ -44,7 +46,7 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
         #region unity methods
         void OnInspectorUpdate()
         {
-            Repaint();
+            // Repaint();
         }
         public void OnGUI()
         {
@@ -57,17 +59,22 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             
             EditoolsButton.Button("Save Rig Controls", Color.white, SaveControlRigs );
             EditoolsLayout.Horizontal(false);
-
-            GUILayout.Space(2);
+            
+            EditoolsLayout.Space(3);
 
             string[] _files = Directory.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
                 .Where(_f => Path.GetExtension(_f) == ".json").ToArray();
+            
+            // start scroll view
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(300), GUILayout.Height(400));
             foreach (var _file in _files)
             {
                 EditoolsLayout.Horizontal(true);
                 EditoolsButton.Button($"Load: {Path.GetFileNameWithoutExtension(_file)}", Color.white, () => LoadControlRigs(_file));
                 EditoolsLayout.Horizontal(false);
             }
+            EditorGUILayout.EndScrollView();
+
             EditoolsLayout.Vertical(false);
         }
         #endregion
