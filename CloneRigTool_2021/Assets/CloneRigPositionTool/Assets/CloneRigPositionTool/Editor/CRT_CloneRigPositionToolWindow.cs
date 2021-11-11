@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using EditoolsUnity;
 
+
 namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
 {
     public class CRT_CloneRigPositionToolWindow : EditorWindow
     {
+
         class NodeCNT
         {
             public float rot_x;
@@ -32,14 +35,13 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             }
         }
         #region f/p
-
         private List<GameObject> selectedGameObjects => Selection.gameObjects.ToList();
         private GameObject selectedRootNode => selectedGameObjects.Count > 0 ? selectedGameObjects.First() : null;
         private string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
         private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
-        
+
         private Vector2 scrollPos;
-        public bool IsValid => selectedRootNode;
+        private bool IsValid => selectedRootNode && Application.isEditor;
 
         #endregion
 
@@ -51,7 +53,6 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
         }
         public void OnGUI()
         {
-            Debug.Log("aaaaaaa");
             List<GameObject> _selectedObjects = Selection.gameObjects.ToList();
 
             if (_selectedObjects.Count != 1)
@@ -63,11 +64,11 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             EditoolsLayout.Horizontal(false);
             
 
-            string[] _files = Directory.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
-                .Where(_f => Path.GetExtension(_f) == ".json").ToArray();
+            string[] _files = Utils.CRT_Utils.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
+                .Where(_f => Path.GetExtension(_f) == ".json").OrderBy(Path.GetFileNameWithoutExtension).ToArray();
             
             // start scroll view
-            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height-100));
             foreach (string _file in _files)
             {
                 EditoolsLayout.Horizontal(true);
@@ -77,9 +78,13 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
                 EditoolsLayout.Horizontal(false);
             }
             EditorGUILayout.EndScrollView();
-
+            EditoolsLayout.Space(1);
+            
+            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
+            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
+            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
             EditoolsLayout.Vertical(false);
-
+            
         }
         #endregion
 
@@ -98,24 +103,23 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             // get all ctn_hips go
             Transform _rootCtr = selectedRootNode.transform;
 
-            if (!_rootCtr)
-                return;
+            if (!_rootCtr) return;
 
             NodeCNT _test = new NodeCNT(_rootCtr.name, 0, 0, 0, 0, _rootCtr.childCount);
             ControllerToNodeObject(_rootCtr, ref _test);
 
             //RecursiveTest(_test);
-            string _json = Newtonsoft.Json.JsonConvert.SerializeObject(_test);
+            string _json = JsonConvert.SerializeObject(_test);
             File.WriteAllText(JSON_FILE_NAME, _json);
-
-
-#if UNITY_EDITOR
-        AssetDatabase.Refresh();
-#endif
+            
+            // first function instruction 'IsValid' protect from run outside editor mode
+            AssetDatabase.Refresh();
         }
 
         private void LoadControlRigs(string _file)
         {
+            if (!IsValid) return;
+            
             // get all ctn_hips go
             // Transform _rootCtr = currentGO.transform.Find("CNT_Character");
             Transform _rootCtr = selectedRootNode.transform;
@@ -133,10 +137,6 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
                 return;
             }
             ApplyToSelectedGameObject(ref _rootCtr, _nodeFromJSon);
-
-            for (int i = 0; i < 12; i++)
-            {
-            }
         }
 
         private void ControllerToNodeObject(Transform _rootTransform, ref NodeCNT _rootNode)
