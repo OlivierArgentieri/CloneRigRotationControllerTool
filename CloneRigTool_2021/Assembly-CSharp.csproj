@@ -41,8 +41,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
+     <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
+     <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
      <None Include="Assets\Resources\Base.json" />
      <None Include="Assets\Resources\Hussard.json" />
      <None Include="Assets\Resources\Pose00.json" />
