@@ -41,20 +41,15 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Utils\IIsValid.cs" />
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigPositionTool\Utils\Utils.cs" />
-     <None Include="Assets\Resources\Hussard (3).json" />
+     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
+     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
      <None Include="Assets\Resources\Hussard (13).json" />
      <None Include="Assets\Resources\Hussard (15).json" />
      <None Include="Assets\Resources\Hussard (0).json" />
      <None Include="Assets\Resources\Hussard (14).json" />
      <None Include="Assets\Resources\Hussard (2).json" />
      <None Include="Assets\Resources\Hussard (11).json" />
-     <None Include="Assets\Resources\Hussard (6).json" />
-     <None Include="Assets\Resources\Hussard (7).json" />
      <None Include="Assets\Resources\Hussard (12).json" />
-     <None Include="Assets\Resources\Hussard (5).json" />
-     <None Include="Assets\Resources\Hussard (4).json" />
      <None Include="Assets\Resources\Hussard (1).json" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0a17/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

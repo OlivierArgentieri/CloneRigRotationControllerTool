@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+using CloneRigRotationTool.Assets.CloneRigRotationTool.Utils;
+using EditoolsUnity;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-using EditoolsUnity;
 
 
-namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
+namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
 {
-    public class CRT_CloneRigPositionToolWindow : EditorWindow
+    public class CRT_CloneRigRotationToolWindow : EditorWindow
     {
-
+        Version version = new Version(0,0,1);
         class NodeCNT
         {
             public float rot_x;
@@ -57,14 +57,14 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
 
             if (_selectedObjects.Count != 1)
                 return;
+            
             EditoolsLayout.Vertical(true); 
             EditoolsLayout.Horizontal(true);
             
             EditoolsButton.Button("Save Rig Controls", Color.Lerp(Color.blue, Color.white, 0.6f), SaveControlRigs );
             EditoolsLayout.Horizontal(false);
             
-
-            string[] _files = Utils.CRT_Utils.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
+            string[] _files = CRT_Utils.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
                 .Where(_f => Path.GetExtension(_f) == ".json").OrderBy(Path.GetFileNameWithoutExtension).ToArray();
             
             // start scroll view
@@ -80,11 +80,13 @@ namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Editor
             EditorGUILayout.EndScrollView();
             EditoolsLayout.Space(1);
             
-            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
-            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
-            EditoolsButton.Button($"Load: ", Color.Lerp(Color.green, Color.white, 0.6f), () => { });
-            EditoolsLayout.Vertical(false);
+            EditoolsLayout.Horizontal(true);
+            var style = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter};
+            EditoolsButton.Button("GitHub", Color.Lerp(Color.blue, Color.white, 0.4f), () => {  Application.OpenURL("http://unity3d.com/");});
+            EditorGUILayout.LabelField($"V{version}",style);
+            EditoolsLayout.Horizontal(false);
             
+            EditoolsLayout.Vertical(false);
         }
         #endregion
 

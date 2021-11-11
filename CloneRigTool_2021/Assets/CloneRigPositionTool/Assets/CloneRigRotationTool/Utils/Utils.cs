@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CloneRigPositionTool.Assets.CloneRigPositionTool.Utils
+namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Utils
 {
     public static class CRT_Utils
     {
