@@ -35,12 +35,14 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             }
         }
         #region f/p
+
+        private static string GITHUB_URL => "https://github.com/OlivierArgentieri/CloneRigRotationControllerTool";
+        private static string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
+        private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
         private List<GameObject> selectedGameObjects => Selection.gameObjects.ToList();
         private GameObject selectedRootNode => selectedGameObjects.Count > 0 ? selectedGameObjects.First() : null;
-        private string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
-        private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
-
         private Vector2 scrollPos;
+        private bool unsecuredMode = false;
         private bool IsValid => selectedRootNode && Application.isEditor;
 
         #endregion
@@ -58,12 +60,34 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             if (_selectedObjects.Count != 1)
                 return;
             
-            EditoolsLayout.Vertical(true); 
             EditoolsLayout.Horizontal(true);
             
-            EditoolsButton.Button("Save Rig Controls", Color.Lerp(Color.blue, Color.white, 0.6f), SaveControlRigs );
+            EditoolsLayout.Vertical(true);
+            EditoolsBox.HelpBoxInfo("Save Rig controls");
+            EditoolsLayout.Vertical(false);
+            
+            EditoolsLayout.Vertical(true);
+            EditoolsButton.Button("GitHub", Color.Lerp(Color.blue, Color.white, 0.4f), () => {  Application.OpenURL(GITHUB_URL);});
+            var style = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter};
+            EditorGUILayout.LabelField($"V{version}", style);
+            EditoolsLayout.Vertical(false);
             EditoolsLayout.Horizontal(false);
             
+            EditoolsLayout.Vertical(true);
+            EditoolsLayout.Horizontal(true);
+            EditoolsBox.HelpBoxInfo("To avoid .json verification");
+            EditoolsField.Toggle("Unsecure mode", ref unsecuredMode);
+            EditoolsLayout.Horizontal(false);
+            EditoolsLayout.Vertical(false);
+            
+            EditoolsLayout.Space(2);
+            EditoolsLayout.Vertical(true);
+            EditoolsLayout.Horizontal(true);
+            EditoolsButton.Button("Save Rig Controls", Color.Lerp(Color.blue, Color.white, 0.6f), SaveControlRigs );
+            EditoolsLayout.Horizontal(false);
+
+            EditoolsLayout.Space();
+
             string[] _files = CRT_Utils.GetFiles(CURRENT_RESOURCES_FOLDER_PATH)
                 .Where(_f => Path.GetExtension(_f) == ".json").OrderBy(Path.GetFileNameWithoutExtension).ToArray();
             
@@ -78,14 +102,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
                 EditoolsLayout.Horizontal(false);
             }
             EditorGUILayout.EndScrollView();
-            EditoolsLayout.Space(1);
-            
-            EditoolsLayout.Horizontal(true);
-            var style = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter};
-            EditoolsButton.Button("GitHub", Color.Lerp(Color.blue, Color.white, 0.4f), () => {  Application.OpenURL("http://unity3d.com/");});
-            EditorGUILayout.LabelField($"V{version}",style);
-            EditoolsLayout.Horizontal(false);
-            
             EditoolsLayout.Vertical(false);
         }
         #endregion
@@ -132,11 +148,14 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             StreamReader _reader = new StreamReader(_file);
             NodeCNT _nodeFromJSon = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
             _reader.Close();
-
-            if (_rootCtr.childCount != _nodeFromJSon.childNumber)
+            
+            Debug.Log(_rootCtr.childCount);
+            Debug.Log(_nodeFromJSon.childNumber);
+            Debug.Log(unsecuredMode);
+            if (_rootCtr.childCount != _nodeFromJSon.childNumber && !unsecuredMode)
             {
-                EditorUtility.DisplayDialog("Error", "Incompatible .json and gameObject", "OK");
-                return;
+                 EditorUtility.DisplayDialog("Error", "Incompatible .json and gameObject", "OK");
+                 return;
             }
             ApplyToSelectedGameObject(ref _rootCtr, _nodeFromJSon);
         }

@@ -43,14 +43,10 @@
   <ItemGroup>
      <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
      <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
-     <None Include="Assets\Resources\Hussard (13).json" />
-     <None Include="Assets\Resources\Hussard (15).json" />
-     <None Include="Assets\Resources\Hussard (0).json" />
-     <None Include="Assets\Resources\Hussard (14).json" />
-     <None Include="Assets\Resources\Hussard (2).json" />
-     <None Include="Assets\Resources\Hussard (11).json" />
-     <None Include="Assets\Resources\Hussard (12).json" />
-     <None Include="Assets\Resources\Hussard (1).json" />
+     <None Include="Assets\Resources\Base.json" />
+     <None Include="Assets\Resources\Hussard.json" />
+     <None Include="Assets\Resources\Pose00.json" />
+     <None Include="Assets\Resources\Pose01.json" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0a17/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
