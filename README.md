@@ -20,7 +20,7 @@ Why this tool is in widow mode in unity 2021.2 and not in Overlay ?
 ## Demo :
 ![demo](https://github.com/OlivierArgentieri/CloneRigRotationControllerTool/blob/main/assets/Demo.gif)
 
-## Insecure mode ?
+## Unsecure mode ?
 When you try to load .json file in a GameObject, a test is realized to ensure compatibility.
 
 But if you want to "force" loading of this .json, you can check this checkbox to bypass compatibility test.
