@@ -149,9 +149,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             NodeCNT _nodeFromJSon = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
             _reader.Close();
             
-            Debug.Log(_rootCtr.childCount);
-            Debug.Log(_nodeFromJSon.childNumber);
-            Debug.Log(unsecuredMode);
             if (_rootCtr.childCount != _nodeFromJSon.childNumber && !unsecuredMode)
             {
                  EditorUtility.DisplayDialog("Error", "Incompatible .json and gameObject", "OK");

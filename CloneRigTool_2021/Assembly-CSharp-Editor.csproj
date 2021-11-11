@@ -41,8 +41,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigPositionToolWindowInit.cs" />
-     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigPositionToolWindow.cs" />
+     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigRotationToolWindowInit.cs" />
+     <Compile Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigRotationToolWindow.cs" />
      <None Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\package.json" />
      <None Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.deps.json" />
      <None Include="Assets\CloneRigPositionTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.xml" />
