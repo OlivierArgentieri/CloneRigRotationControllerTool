@@ -2,8 +2,7 @@
 UnityTool to Save/Duplicate/Share rig controllers rotation.
 
 ## Why ?
-Based on request from one holdfast game modder
-He need to save each pose to commercial usage.
+Based on request from a holdfast game modder, to save each pose to commercial use.
 
 ## How it works ?
 Select the main rig controller of your rig and the tool will recursively save all child GameObject rotation to a .json file (in /Resources of your project).
