@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CloneRigRotationTool.Assets.CloneRigRotationTool.Models;
 using CloneRigRotationTool.Assets.CloneRigRotationTool.Utils;
 using EditoolsUnity;
 using Newtonsoft.Json;
@@ -17,26 +18,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
     public class CRT_CloneRigRotationToolOverlay : IMGUIOverlay
     {
         Version version = new Version(0,0,1);
-        class NodeCNT
-        {
-            public float rot_x;
-            public float rot_y;
-            public float rot_z;
-            public float rot_w;
-            public string name;
-            public int childNumber;
-            public NodeCNT[] next = null;
-            public NodeCNT(string _name, float _rot_x, float _rot_y, float _rot_z, float _rot_w, int _childNumber, NodeCNT[] _next = null)
-            {
-                rot_x = _rot_x;
-                rot_y = _rot_y;
-                rot_z = _rot_z;
-                rot_w = _rot_w;
-                name = _name;
-                childNumber = _childNumber;
-                next = _next;
-            }
-        }
         #region f/p
 
         private static string GITHUB_URL => "https://github.com/OlivierArgentieri/CloneRigRotationControllerTool";

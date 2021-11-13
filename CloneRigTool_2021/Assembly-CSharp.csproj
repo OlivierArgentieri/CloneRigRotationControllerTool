@@ -43,6 +43,7 @@
   <ItemGroup>
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
+     <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Models\CNT_Node.cs" />
      <None Include="Assets\Resources\Hip.json" />
      <None Include="Assets\Resources\RThigh.json" />
      <None Include="Assets\Resources\LowerSpine.json" />
