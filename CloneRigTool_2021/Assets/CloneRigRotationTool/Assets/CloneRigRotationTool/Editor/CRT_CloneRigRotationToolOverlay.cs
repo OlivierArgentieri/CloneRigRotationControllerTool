@@ -33,9 +33,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
 
         #region unity methods
 
-        void OnInspectorUpdate()
-        {
-        }
         public override void OnGUI()
         {
             List<GameObject> _selectedObjects = Selection.gameObjects.ToList();
@@ -93,28 +90,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
         private void SaveControlRigs()
         {
             if (!IsValid) return;
-
-            // check if directory exist
-            if (!Directory.Exists(CURRENT_RESOURCES_FOLDER_PATH))
-            {
-                // and create it
-                Directory.CreateDirectory(CURRENT_RESOURCES_FOLDER_PATH);
-            }
-
-            // get all ctn_hips go
-            Transform _rootCtr = selectedRootNode.transform;
-
-            if (!_rootCtr) return;
-
-            NodeCNT _test = new NodeCNT(_rootCtr.name, 0, 0, 0, 0, _rootCtr.childCount);
-            ControllerToNodeObject(_rootCtr, ref _test);
-
-            //RecursiveTest(_test);
-            string _json = JsonConvert.SerializeObject(_test);
-            File.WriteAllText(JSON_FILE_NAME, _json);
-            
-            // first function instruction 'IsValid' protect from run outside editor mode
-            AssetDatabase.Refresh();
+            CloneRigToolController.CloneRigToolController.SaveControlRigs(selectedRootNode);
         }
 
         private void LoadControlRigs(string _file)

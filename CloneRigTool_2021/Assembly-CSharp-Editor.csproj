@@ -44,6 +44,7 @@
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigRotationToolWindowInit.cs" />
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigRotationToolWindow.cs" />
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\CRT_CloneRigRotationToolOverlay.cs" />
+     <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\CloneRigToolController\CloneRigToolController.cs" />
      <None Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\package.json" />
      <None Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.deps.json" />
      <None Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Editor\Newtonsoft.Json-for-Unity-13.0.102\Plugins\Newtonsoft.Json AOT\Newtonsoft.Json.xml" />

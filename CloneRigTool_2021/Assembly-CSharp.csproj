@@ -44,25 +44,12 @@
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\IIsValid.cs" />
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Utils\Utils.cs" />
      <Compile Include="Assets\CloneRigRotationTool\Assets\CloneRigRotationTool\Models\CNT_Node.cs" />
-     <None Include="Assets\Resources\Hip.json" />
-     <None Include="Assets\Resources\RThigh.json" />
-     <None Include="Assets\Resources\LowerSpine.json" />
-     <None Include="Assets\Resources\CNT_Hips.json" />
-     <None Include="Assets\Resources\EffectorLToe.json" />
-     <None Include="Assets\Resources\CNT_Character.json" />
+     <None Include="Assets\Resources\Hussard-t.json" />
      <None Include="Assets\Resources\Base.json" />
      <None Include="Assets\Resources\Hussard.json" />
-     <None Include="Assets\Resources\RShin.json" />
-     <None Include="Assets\Resources\LToe.json" />
      <None Include="Assets\Resources\MiddleSpine.json" />
-     <None Include="Assets\Resources\EffectorRToe.json" />
      <None Include="Assets\Resources\Pose00.json" />
-     <None Include="Assets\Resources\LFoot.json" />
-     <None Include="Assets\Resources\LThigh.json" />
-     <None Include="Assets\Resources\RToe.json" />
-     <None Include="Assets\Resources\LShin.json" />
      <None Include="Assets\Resources\Pose01.json" />
-     <None Include="Assets\Resources\RFoot.json" />
      <Reference Include="UnityEngine">
      <HintPath>C:/Program Files/Unity/Hub/Editor/2021.2.0a17/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
