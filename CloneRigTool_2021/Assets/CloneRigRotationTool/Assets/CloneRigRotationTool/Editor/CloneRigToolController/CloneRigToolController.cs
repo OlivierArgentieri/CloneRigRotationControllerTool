@@ -71,6 +71,33 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor.CloneRigToolCo
             // first function instruction 'IsValid' protect from run outside editor mode
             AssetDatabase.Refresh();
         }
+
+        public static void ApplyToSelectedGameObject(Transform _rootTransform, NodeCNT _rootNode)
+        {
+            if (_rootNode.next == null)
+            {
+                _rootTransform.rotation = new Quaternion(
+                    _rootNode.rot_x,
+                    _rootNode.rot_y,
+                    _rootNode.rot_z,
+                    _rootNode.rot_w
+                );
+                return;
+            }
+
+            for (int _i = 0; _i < _rootNode.next.Length; _i++)
+            {
+                var rootTransform = _rootTransform.transform.GetChild(_i);
+                _rootTransform.rotation = new Quaternion(
+                    _rootNode.rot_x,
+                    _rootNode.rot_y,
+                    _rootNode.rot_z,
+                    _rootNode.rot_w
+                );
+                ApplyToSelectedGameObject(rootTransform, _rootNode.next[_i]);
+            }
+
+        }
         
         private static string GetJsonFileName(string _rootName) => $"{CURRENT_RESOURCES_FOLDER_PATH}/{_rootName}.json";
         #endregion
