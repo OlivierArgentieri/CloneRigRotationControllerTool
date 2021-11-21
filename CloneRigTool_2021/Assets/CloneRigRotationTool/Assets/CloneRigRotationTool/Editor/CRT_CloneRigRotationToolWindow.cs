@@ -14,8 +14,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
 {
     public class CRT_CloneRigRotationToolWindow : EditorWindow
     {
-        Version version = new (0,0,1);
-        
         #region f/p
 
         private static string GITHUB_URL => "https://github.com/OlivierArgentieri/CloneRigRotationControllerTool";
@@ -50,7 +48,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             EditoolsLayout.Vertical(true);
             EditoolsButton.Button("GitHub", Color.Lerp(Color.blue, Color.white, 0.4f), () => {  Application.OpenURL(GITHUB_URL);});
             var style = new GUIStyle(GUI.skin.label) {alignment = TextAnchor.MiddleCenter};
-            EditorGUILayout.LabelField($"V{version}", style);
+            EditorGUILayout.LabelField($"V{CloneRigToolController.CloneRigToolController.version}", style);
             EditoolsLayout.Vertical(false);
             EditoolsLayout.Horizontal(false);
             
