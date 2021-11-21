@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using UnityEditor;
 
 namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Utils
 {
@@ -10,6 +11,17 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Utils
                 return new string[] {};
 
             return Directory.GetFiles(_path);
+        }
+        public static void RemoveFile(string _path)
+        {
+            if (!File.Exists(_path)) return;
+            File.Delete(_path);
+            
+            string _meta = $"{_path}.meta";
+            if (!File.Exists(_meta)) return;
+            File.Delete(_meta);
+            
+            AssetDatabase.Refresh();
         }
     }
 }

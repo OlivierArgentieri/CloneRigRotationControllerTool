@@ -22,7 +22,6 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
 
         private static string GITHUB_URL => "https://github.com/OlivierArgentieri/CloneRigRotationControllerTool";
         private static string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
-        private string JSON_FILE_NAME => $"{CURRENT_RESOURCES_FOLDER_PATH}/{(IsValid ? selectedRootNode.name : "undefined" )}.json";
         private List<GameObject> selectedGameObjects => Selection.gameObjects.ToList();
         private GameObject selectedRootNode => selectedGameObjects.Count > 0 ? selectedGameObjects.First() : null;
         private Vector2 scrollPos;
@@ -77,7 +76,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
             {
                 EditoolsLayout.Horizontal(true);
                 EditoolsButton.Button($"Load: {Path.GetFileNameWithoutExtension(_file)}", Color.Lerp(Color.green, Color.white, 0.6f), () => LoadControlRigs(_file));
-                EditoolsButton.ButtonWithConfirm($"X", Color.Lerp(Color.black, Color.white, 0.6f), () => RemoveFile(_file), $"Remove: {Path.GetFileName(_file)}",
+                EditoolsButton.ButtonWithConfirm($"X", Color.Lerp(Color.black, Color.white, 0.6f), () => CRT_Utils.RemoveFile(_file), $"Remove: {Path.GetFileName(_file)}",
                     "Are you sure ?", "Yes", "No");
                 EditoolsLayout.Horizontal(false);
             }
@@ -113,56 +112,9 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
                  EditorUtility.DisplayDialog("Error", "Incompatible .json and gameObject", "OK");
                  return;
             }
+            
             CloneRigToolController.CloneRigToolController.ApplyToSelectedGameObject(_rootCtr, _nodeFromJSon);
         }
-
-        private void ControllerToNodeObject(Transform _rootTransform, ref NodeCNT _rootNode)
-        {
-            if (_rootTransform.childCount == 0)
-            {
-                // tail
-                if (_rootNode == null)
-                {
-                    _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w, _rootTransform.childCount);
-                }
-                return;
-            }
-
-            if (_rootNode == null)
-            {
-                _rootNode = new NodeCNT(_rootTransform.name, _rootTransform.rotation.x, _rootTransform.rotation.y, _rootTransform.rotation.z, _rootTransform.rotation.w, _rootTransform.childCount);
-            }
-
-            if (_rootTransform.childCount > 0)
-                _rootNode.next = new NodeCNT[_rootTransform.childCount];
-
-            for (int _i = 0; _i < _rootTransform.childCount; _i++)
-            {
-                ControllerToNodeObject(_rootTransform.GetChild(_i), ref _rootNode.next[_i]);
-            }
-
-            // not last
-            _rootNode.name = _rootTransform.name;
-            var _rotation = _rootTransform.rotation;
-            _rootNode.rot_x = _rotation.x;
-            _rootNode.rot_y = _rotation.y;
-            _rootNode.rot_z = _rotation.z;
-            _rootNode.rot_w = _rotation.w;
-        }
-
-        private void RemoveFile(string _path)
-        {
-            if (!File.Exists(_path)) return;
-            File.Delete(_path);
-            
-            string _meta = $"{_path}.meta";
-            if (!File.Exists(_meta)) return;
-            File.Delete(_meta);
-            
-            AssetDatabase.Refresh();
-        }
-
-        
         #endregion
     }
 }

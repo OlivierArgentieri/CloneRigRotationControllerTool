@@ -47,7 +47,6 @@
      <None Include="Assets\Resources\Hussard-t.json" />
      <None Include="Assets\Resources\Base.json" />
      <None Include="Assets\Resources\Hussard.json" />
-     <None Include="Assets\Resources\MiddleSpine.json" />
      <None Include="Assets\Resources\Pose00.json" />
      <None Include="Assets\Resources\Pose01.json" />
      <Reference Include="UnityEngine">
