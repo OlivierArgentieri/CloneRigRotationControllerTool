@@ -10,7 +10,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor.CloneRigToolCo
 {
     public class CloneRigToolController
     {
-        public static Version version = new (0,0,2);
+        public static Version version = new Version(0,0,2);
         #region f/p
         private static string CURRENT_RESOURCES_FOLDER_PATH => $"{Application.dataPath}/Resources";
         #endregion
