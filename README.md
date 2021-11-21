@@ -4,7 +4,7 @@ UnityTool to Save/Duplicate/Share rig controllers rotation.
 ## Get Started 
 - Download last release of unitypackage in [releases](https://github.com/OlivierArgentieri/CloneRigRotationControllerTool/releases) for your unity version.
 - Open and import all
-> **WARNING** Required .NET 4 : go to edit > project settings and select ".net 4.x ..."
+> **WARNING** Required .NET 4 : go to edit > project settings > player > other settings and select ".net 4.x ..."
 
 ## Why ?
 Based on request from a holdfast game modder, to save each pose to commercial use.
