@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
 using CloneRigRotationTool.Assets.CloneRigRotationTool.Models;
-using Newtonsoft.Json;
+#if UNITY_2021
+#endif
 using UnityEditor;
 using UnityEngine;
 
@@ -67,7 +68,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor.CloneRigToolCo
             ControllerToNodeObject(_rootCtr, ref _test);
 
             //RecursiveTest(_test);
-            string _json = JsonConvert.SerializeObject(_test);
+            string _json = Newtonsoft.Json.JsonConvert.SerializeObject(_test);
             File.WriteAllText(GetJsonFileName(_selectedRootNode.name), _json);
             
             // first function instruction 'IsValid' protect from run outside editor mode

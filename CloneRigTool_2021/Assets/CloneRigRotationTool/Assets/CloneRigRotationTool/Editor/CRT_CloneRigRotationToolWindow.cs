@@ -5,7 +5,6 @@ using System.Linq;
 using CloneRigRotationTool.Assets.CloneRigRotationTool.Models;
 using CloneRigRotationTool.Assets.CloneRigRotationTool.Utils;
 using EditoolsUnity;
-using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
@@ -104,7 +103,7 @@ namespace CloneRigRotationTool.Assets.CloneRigRotationTool.Editor
                 return;
 
             StreamReader _reader = new StreamReader(_file);
-            NodeCNT _nodeFromJSon = JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
+            NodeCNT _nodeFromJSon = Newtonsoft.Json.JsonConvert.DeserializeObject<NodeCNT>(_reader.ReadToEnd());
             _reader.Close();
             
             if (_rootCtr.childCount != _nodeFromJSon.childNumber && !unsecuredMode)
