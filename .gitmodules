@@ -1,0 +1,4 @@
+[submodule "CloneRigTool_2021/Assets/CloneRigRotationTool/Assets/CloneRigRotationTool/Plugins/Editor/EditoolsUnity"]
+	path = CloneRigTool_2021/Assets/CloneRigRotationTool/Assets/CloneRigRotationTool/Plugins/Editor/EditoolsUnity
+	url = https://github.com/OlivierArgentieri/EditoolsUnity.git
+	branch = prod
